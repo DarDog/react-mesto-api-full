@@ -1,0 +1,29 @@
+.pop-up__exit-button {
+  background-image: url("../../../images/cross-icon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  transform: rotate(45deg);
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  transition: opacity .3s;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.pop-up__exit-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 880px) {
+  .pop-up__exit-button {
+    top: -40px;
+    left: 256px;
+    height: 26px;
+    width: 26px;
+  }
+}

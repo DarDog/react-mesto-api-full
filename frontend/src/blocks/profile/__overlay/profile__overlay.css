@@ -1,0 +1,13 @@
+.profile__overlay {
+  background-image: url("../../../images/pen.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  margin-right: 30px;
+}
+
+@media screen and (max-width: 880px){
+  .profile__overlay {
+    margin: 0 0 26px;
+  }
+}
