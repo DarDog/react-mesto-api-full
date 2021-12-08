@@ -78,7 +78,10 @@ app.use(auth);
 
 app.get('/signout', (req, res) => {
   res.status(200)
-    .clearCookie('jwt')
+    .clearCookie('jwt', {
+      sameSite: 'None',
+      secure: true,
+    })
     .send({ message: 'Выход' });
 });
 
