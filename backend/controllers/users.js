@@ -5,6 +5,7 @@ const NotFoundErr = require('../errors/not-found-err');
 const BadRequestErr = require('../errors/bad-request-err');
 const AuthErr = require('../errors/auth-err');
 const ConflictErr = require('../errors/conflict-err');
+
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
@@ -60,7 +61,7 @@ module.exports.setUser = (req, res, next) => {
       },
     }))
     .catch((err) => {
-      if (err.name === 'MongoServerError' && err.code === 11000) {
+      if (err.code === 11000) {
         next(new ConflictErr('Пользователь с таким email уже зарегистрирован'));
       }
       if (err.name === 'ValidationError') {
@@ -74,61 +75,53 @@ module.exports.setUser = (req, res, next) => {
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
 
-  if (!name || !about) {
-    throw new BadRequestErr('Поля name и about должны быть заполнены');
-  } else {
-    User.findByIdAndUpdate(
-      req.user._id,
-      {
-        name,
-        about
-      },
-      {
-        new: true,
-        runValidators: true,
-      },
-    )
-      .orFail(new Error('InvalidId'))
-      .then((user) => res.send(user))
-      .catch((err) => {
-        if (err.message === 'InvalidId') {
-          next(new NotFoundErr(`Пользователь с _id: ${req.user._id}`));
-        } else if (err.name === 'ValidationError') {
-          next(new BadRequestErr('Переданы некорректные данные при создании пользователя.'));
-        } else if (err.name === 'CastError') {
-          next(new BadRequestErr('Введен некорректный _id'));
-        }
-        next(err);
-      });
-  }
+  User.findByIdAndUpdate(
+    req.user._id,
+    {
+      name,
+      about,
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .orFail(new Error('InvalidId'))
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.message === 'InvalidId') {
+        next(new NotFoundErr(`Пользователь с _id: ${req.user._id}`));
+      } else if (err.name === 'ValidationError') {
+        next(new BadRequestErr('Переданы некорректные данные при создании пользователя.'));
+      } else if (err.name === 'CastError') {
+        next(new BadRequestErr('Введен некорректный _id'));
+      }
+      next(err);
+    });
 };
 
 module.exports.updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
-  if (!avatar) {
-    throw new BadRequestErr('Поле avatar должно быть заполнено');
-  } else {
-    User.findByIdAndUpdate(
-      req.user._id,
-      { avatar },
-      {
-        new: true,
-        runValidators: true,
-      },
-    )
-      .orFail(new Error('InvalidId'))
-      .then((user) => res.send(user))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          next(new BadRequestErr('Переданы некорректные данные.'));
-        } else if (err.name === 'CastError') {
-          next(new BadRequestErr('Введен некорректный _id'));
-        } else {
-          next(err);
-        }
-      });
-  }
+  User.findByIdAndUpdate(
+    req.user._id,
+    { avatar },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .orFail(new Error('InvalidId'))
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestErr('Переданы некорректные данные.'));
+      } else if (err.name === 'CastError') {
+        next(new BadRequestErr('Введен некорректный _id'));
+      } else {
+        next(err);
+      }
+    });
 };
 
 module.exports.login = (req, res, next) => {

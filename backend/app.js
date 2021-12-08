@@ -3,17 +3,18 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 const { login, setUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { errorHandler } = require('./middlewares/errors');
 const regExp = require('./regExp/regExp');
 const { requestLogger, errorLogger } = require('./middlewares/Logger');
-const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
 
-require('dotenv').config();
+require('dotenv')
+  .config();
 
 app.use(cors({
   option: [
@@ -26,7 +27,7 @@ app.use(cors({
     'https://mesto.subb.nomoredomains.rocks',
     'http://localhost:3000',
   ],
-  credentials: true
+  credentials: true,
 }));
 
 app.use(bodyParser.json());
@@ -74,6 +75,12 @@ app.post('/signup', celebrate({
 }), setUser);
 
 app.use(auth);
+
+app.get('/signout', (req, res) => {
+  res.status(200)
+    .clearCookie('jwt')
+    .send({ message: 'Выход' });
+});
 
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));

@@ -17,4 +17,4 @@
         cd backend
         npm run dev
 
-http://mesto.subb.nomoredomains.rocks/ ссылка на сайт
+http://mesto.subb.nomoredomains.rocks/ Ссылка на сайт, 51.250.15.2 Публичный IP

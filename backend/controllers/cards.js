@@ -51,7 +51,7 @@ module.exports.deleteCardById = (req, res, next) => {
 };
 
 module.exports.addLikeOnCard = (req, res, next) => {
-  console.log(req.params.cardId)
+  console.log(req.params.cardId);
   Cards.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .orFail(new Error('InvalidId'))
     .then((card) => {
