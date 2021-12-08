@@ -17,4 +17,4 @@
         cd backend
         npm run dev
 
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
+http://mesto.subb.nomoredomains.rocks/ ссылка на сайт

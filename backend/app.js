@@ -8,9 +8,26 @@ const auth = require('./middlewares/auth');
 const { errorHandler } = require('./middlewares/errors');
 const regExp = require('./regExp/regExp');
 const { requestLogger, errorLogger } = require('./middlewares/Logger');
+const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+require('dotenv').config();
+
+app.use(cors({
+  option: [
+    'http://mesto.subb.nomoredomains.rocks',
+    'https://mesto.subb.nomoredomains.rocks',
+    'http://localhost:3000',
+  ],
+  origin: [
+    'http://mesto.subb.nomoredomains.rocks',
+    'https://mesto.subb.nomoredomains.rocks',
+    'http://localhost:3000',
+  ],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 app.use(cookieParser());

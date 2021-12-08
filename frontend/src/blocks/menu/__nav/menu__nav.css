@@ -1,0 +1,15 @@
+.menu__nav {
+  display: none;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 880px){
+  .menu__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0;
+  }
+}

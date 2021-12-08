@@ -1,0 +1,12 @@
+.nav {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 880px){
+  .nav {
+    display: none;
+  }
+}

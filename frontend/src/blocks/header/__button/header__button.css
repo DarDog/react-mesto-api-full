@@ -1,0 +1,21 @@
+.header__button {
+  display: none;
+  background-image: url("../../../images/burger-menu.svg");
+  background-color: inherit;
+  border: none;
+  padding: 0;
+  margin-right: 30px;
+  width: 24px;
+  height: 21px;
+  transition: opacity .3s;
+}
+
+.header__button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 880px){
+  .header__button{
+    display: block;
+  }
+}

@@ -1,0 +1,11 @@
+.nav__button {
+  color: #a9a9a9;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: right;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+  cursor: pointer;
+}

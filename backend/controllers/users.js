@@ -5,6 +5,7 @@ const NotFoundErr = require('../errors/not-found-err');
 const BadRequestErr = require('../errors/bad-request-err');
 const AuthErr = require('../errors/auth-err');
 const ConflictErr = require('../errors/conflict-err');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -52,7 +53,10 @@ module.exports.setUser = (req, res, next) => {
     }))
     .then(() => res.send({
       data: {
-        name, about, avatar, email,
+        name,
+        about,
+        avatar,
+        email,
       },
     }))
     .catch((err) => {
@@ -75,7 +79,10 @@ module.exports.updateUser = (req, res, next) => {
   } else {
     User.findByIdAndUpdate(
       req.user._id,
-      { name, about },
+      {
+        name,
+        about
+      },
       {
         new: true,
         runValidators: true,
@@ -130,7 +137,6 @@ module.exports.login = (req, res, next) => {
   User.findOne({ email })
     .select('+password')
     .orFail(new Error('InvalidEmail'))
-
     .then((user) => {
       bcrypt.compare(password, user.password)
         .then((matched) => {
@@ -139,14 +145,16 @@ module.exports.login = (req, res, next) => {
           } else {
             const token = jwt.sign(
               { _id: user._id },
-              '45ea781744ec7b4e07a1ff7e4adbd95bacff89e3d0266bb0e17a9f12ff31e01e',
+              NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
               { expiresIn: '7d' },
             );
-            res.cookie('token', token, {
-              maxAge: 3600000 * 24 * 7,
-              httpOnly: true,
-            })
-
+            res
+              .cookie('jwt', token, {
+                maxAge: 3600000 * 24 * 7,
+                httpOnly: true,
+                sameSite: 'None',
+                secure: true,
+              })
               .end();
           }
         });

@@ -1,0 +1,10 @@
+.form__input_type_auth {
+  background-color: inherit;
+  color: #CCCCCC;
+  border-bottom: 2px solid #CCCCCC;
+  margin-top: 30px;
+}
+
+.form__input_type_auth:first-of-type {
+  margin-top: 0;
+}

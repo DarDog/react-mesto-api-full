@@ -1,0 +1,14 @@
+.auth__link {
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 15px;
+  transition: opacity .3s;
+}
+
+.auth__link {
+  opacity: .6;
+}

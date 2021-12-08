@@ -1,0 +1,12 @@
+.form__submit-button_type_auth {
+  background-color: #FFFFFF;
+  color: black;
+  margin-bottom: 0;
+  margin-top: 200px;
+}
+
+@media screen and (max-width: 880px){
+  .form__submit-button_type_auth {
+    margin-top: 150px;
+  }
+}

@@ -5,7 +5,7 @@ const ForbiddenErr = require('../errors/forbidden-err');
 
 module.exports.getCards = (req, res, next) => {
   Cards.find({})
-    .then((cards) => res.send({ cards }))
+    .then((cards) => res.send(cards))
     .catch(next);
 };
 
@@ -51,6 +51,7 @@ module.exports.deleteCardById = (req, res, next) => {
 };
 
 module.exports.addLikeOnCard = (req, res, next) => {
+  console.log(req.params.cardId)
   Cards.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .orFail(new Error('InvalidId'))
     .then((card) => {
