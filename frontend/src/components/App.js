@@ -219,8 +219,13 @@ function App () {
           setErrorMassage(`Ошибка: ${err.status}`);
           setIsErrorPopupOpen(true);
         }
-
       })
+  }
+
+  const logout = () => {
+    auth.logout()
+      .then(console.log)
+      .catch(console.log)
   }
 
   return (
@@ -228,6 +233,7 @@ function App () {
       <Header
         loggedIn={ loggedIn }
         userData={ currentUser }
+        onLogout={ logout }
       />
       <Switch>
         <ProtectedRoute

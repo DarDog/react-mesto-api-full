@@ -11,7 +11,7 @@ function Header(props) {
   }
 
   const handleExit = () => {
-    localStorage.removeItem('jwt')
+    props.onLogout();
     history.push('/sign-in')
   }
 

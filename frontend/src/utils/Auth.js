@@ -32,8 +32,8 @@ class Auth {
         // })
   }
 
-  getUserInfo() {
-    return fetch(`${this._BASE_URL}/users/me`, {
+  logout() {
+    return fetch(`${this._BASE_URL}/signout`, {
       credentials: 'include',
       headers: {
         "Content-type": "application/json",
